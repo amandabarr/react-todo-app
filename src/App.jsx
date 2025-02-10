@@ -1,7 +1,9 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
+
+function DeleteButton({ onClick }) {
+  return <button onClick={onClick}> Delete </button>;
+}
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -12,6 +14,11 @@ function App() {
       setTodos([...todos, input]);
       setInput(""); // Reset the input after adding task
     }
+  };
+
+  const deleteTodo = (index) => {
+    const updatedTodos = todos.filter((_, i) => i !== index);
+    setTodos(updatedTodos);
   };
 
   return (
@@ -26,7 +33,9 @@ function App() {
       <button onClick={addTodo}> Add </button>
       <ul>
         {todos.map((todo, index) => (
-          <li key={index}>{todo}</li>
+          <li key={index}>
+            {todo} <DeleteButton onClick={() => deleteTodo(index)} />
+          </li>
         ))}
       </ul>
     </div>
